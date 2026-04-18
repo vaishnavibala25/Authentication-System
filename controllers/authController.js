@@ -4,7 +4,7 @@ import { hashPassword } from "../utils/hashPassword.js";
 import { generateToken } from "../utils/generateToken.js";
 
 export const register=async(req,res)=>{
-    const {username,email,password}=req.body
+    const {username,email,password,role,marks}=req.body
 
     try{
         const existingUser=await userModel.findOne({email});
@@ -13,7 +13,7 @@ export const register=async(req,res)=>{
         }
         const hashedPassword=await hashPassword(password)
 
-        const user= await userModel.create({username,email,password:hashedPassword})
+        const user= await userModel.create({username,email,password:hashedPassword,role,marks})
         
         return res.status(201).json({message:"Register SuccessFull"})
     }
@@ -43,7 +43,7 @@ export const login=async(req,res)=>{
         res.json({token,user : {
             username:user.username,
             email:user.email,
-            id:user.id
+            id:user.id,role:user.role
         },})
     }
     catch(err){

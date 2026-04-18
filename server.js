@@ -3,6 +3,10 @@ import dotenv from "dotenv"
 import cors from "cors"
 import mongoose from "mongoose"
 import authRoutes from "./routes/authRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js"
+import studentRoutes from "./routes/studentRoutes.js"
+
+
 dotenv.config()
 const app=express()
 app.use(cors())
@@ -16,6 +20,8 @@ mongoose.connect(mongo_uri)
 .catch((err)=>{console.log(err)})
 
 app.use("/api/auth",authRoutes)
+app.use("/api/admin",adminRoutes)
+app.use("/api/student",studentRoutes)
 
 app.listen(PORT,()=>{
     console.log(`Server running on ${PORT}`)
